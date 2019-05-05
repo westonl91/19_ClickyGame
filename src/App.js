@@ -14,6 +14,7 @@ class App extends React.Component {
   handleIncrement = () => {
     // We always use the setState method to update a component's state
     this.setState({ count: this.state.count + 1 });
+    Images.sort(() => Math.random() - 0.5);
   };
 
   render() {
@@ -29,7 +30,7 @@ class App extends React.Component {
         </div>
         <h1 className="title">Click on a pic!</h1>
 
-        {Images.map(img => (
+        {Images.map((img, i) => (
           <PicCard image={img.image} func={this.handleIncrement} />
         ))}
       </Wrapper>
