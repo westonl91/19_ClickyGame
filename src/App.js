@@ -4,6 +4,8 @@ import Wrapper from "./components/wrapper";
 import PicCard from "./components/picCard";
 import Images from "./pics.json";
 
+var clickedImgs = [];
+
 class App extends React.Component {
   // Setting the initial state of the Counter component
   state = {
@@ -11,10 +13,17 @@ class App extends React.Component {
   };
 
   // handleIncrement increments this.state.count by 1
-  handleIncrement = () => {
+  handleIncrement = id => {
     // We always use the setState method to update a component's state
     this.setState({ count: this.state.count + 1 });
     Images.sort(() => Math.random() - 0.5);
+    console.log(id);
+    if (clickedImgs.includes(id)) {
+      this.setState({ count: 0 });
+      clickedImgs = [];
+    } else {
+      clickedImgs.push(id);
+    }
   };
 
   render() {
@@ -30,8 +39,11 @@ class App extends React.Component {
         </div>
         <h1 className="title">Click on a pic!</h1>
 
-        {Images.map((img, i) => (
-          <PicCard image={img.image} func={this.handleIncrement} />
+        {Images.map(img => (
+          <PicCard
+            image={img.image}
+            func={() => this.handleIncrement(img.id)}
+          />
         ))}
       </Wrapper>
     );
